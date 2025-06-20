@@ -136,6 +136,12 @@
             position: relative;
             margin: 50px auto;
             animation: float 3s ease-in-out infinite, rotate 10s linear infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .diamond:hover {
+            transform: scale(1.1);
         }
         
         .diamond::before {
@@ -302,6 +308,91 @@
             50% { opacity: 1; }
         }
         
+        /* 圖片彈窗樣式 */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .image-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .image-modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: scale(0.5) rotate(180deg);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 5px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4) border-box;
+            animation: modalSparkle 2s ease-in-out infinite;
+        }
+        
+        .image-modal.show .image-modal-content {
+            transform: scale(1) rotate(0deg);
+        }
+        
+        .image-modal img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .close-button {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8787);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .close-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+        }
+        
+        @keyframes modalSparkle {
+            0%, 100% { 
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+                           0 0 0 0 rgba(255, 255, 255, 0.5);
+            }
+            50% { 
+                box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4),
+                           0 0 20px 5px rgba(255, 255, 255, 0.3);
+            }
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -377,6 +468,12 @@
                 padding: 0 20px;
                 text-align: center;
             }
+            
+            .image-modal-content {
+                max-width: 95%;
+                max-height: 95%;
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -393,7 +490,7 @@
                 <div class="photo-name left">林英嘉</div>
             </div>
             
-            <div class="diamond">
+            <div class="diamond" id="diamond">
                 <div class="diamond-shine"></div>
             </div>
             
@@ -409,13 +506,21 @@
         
         <div class="message">
             <h1>Papaya is My Diamond 💎</h1>
-            <p>像鑽石一樣珍貴的妳</p>
+            <p>醫技系的女同學 蔡慕璇</p>
             <p>閃耀著無法取代的光芒</p>
             <p>照亮了我的整個世界</p>
             <p>Forever and Always ✨</p>
         </div>
         
-        <div class="click-hint">點擊任意處增加更多驚喜 ✨</div>
+        <div class="click-hint">點擊鑽石看驚喜，點擊其他地方增加特效 ✨</div>
+    </div>
+    
+    <!-- 圖片彈窗 -->
+    <div class="image-modal" id="imageModal">
+        <div class="image-modal-content">
+            <button class="close-button" id="closeButton">×</button>
+            <img src="hobby.webp" alt="Special Image" id="modalImage">
+        </div>
     </div>
 
     <script>
@@ -486,6 +591,29 @@
             }, 1000);
         }
         
+        // 鑽石特殊點擊效果
+        function createDiamondClickEffect(x, y) {
+            const effects = ['💎', '✨', '🌟'];
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const effect = document.createElement('div');
+                    effect.innerHTML = effects[Math.floor(Math.random() * effects.length)];
+                    effect.style.position = 'fixed';
+                    effect.style.left = (x + (Math.random() - 0.5) * 200) + 'px';
+                    effect.style.top = (y + (Math.random() - 0.5) * 200) + 'px';
+                    effect.style.fontSize = (Math.random() * 10 + 20) + 'px';
+                    effect.style.pointerEvents = 'none';
+                    effect.style.zIndex = '1000';
+                    effect.style.animation = 'fadeInUp 1.5s ease-out forwards';
+                    document.body.appendChild(effect);
+                    
+                    setTimeout(() => {
+                        effect.remove();
+                    }, 1500);
+                }, i * 100);
+            }
+        }
+        
         // 初始化
         createStars();
         createSparkles();
@@ -493,18 +621,58 @@
         // 定期創建愛心
         setInterval(createHeart, 800);
         
-        // 點擊事件
-        document.addEventListener('click', function(e) {
-            createClickEffect(e.clientX, e.clientY);
+        // 鑽石點擊事件
+        const diamond = document.getElementById('diamond');
+        const imageModal = document.getElementById('imageModal');
+        const closeButton = document.getElementById('closeButton');
+        
+        diamond.addEventListener('click', function(e) {
+            e.stopPropagation(); // 防止觸發一般的點擊效果
             
-            // 創建額外的閃光效果
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    createClickEffect(
-                        e.clientX + (Math.random() - 0.5) * 100,
-                        e.clientY + (Math.random() - 0.5) * 100
-                    );
-                }, i * 100);
+            // 創建鑽石特殊效果
+            const rect = diamond.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            createDiamondClickEffect(centerX, centerY);
+            
+            // 顯示圖片彈窗
+            imageModal.classList.add('show');
+        });
+        
+        // 關閉彈窗
+        closeButton.addEventListener('click', function() {
+            imageModal.classList.remove('show');
+        });
+        
+        // 點擊彈窗背景關閉
+        imageModal.addEventListener('click', function(e) {
+            if (e.target === imageModal) {
+                imageModal.classList.remove('show');
+            }
+        });
+        
+        // ESC 鍵關閉彈窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                imageModal.classList.remove('show');
+            }
+        });
+        
+        // 一般點擊事件（除了鑽石）
+        document.addEventListener('click', function(e) {
+            // 如果點擊的不是鑽石或彈窗相關元素
+            if (!diamond.contains(e.target) && !imageModal.contains(e.target)) {
+                createClickEffect(e.clientX, e.clientY);
+                
+                // 創建額外的閃光效果
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        createClickEffect(
+                            e.clientX + (Math.random() - 0.5) * 100,
+                            e.clientY + (Math.random() - 0.5) * 100
+                        );
+                    }, i * 100);
+                }
             }
         });
         
