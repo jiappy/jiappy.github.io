@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💍 文定儀式流程 💍</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Noto Serif TC', 'Poppins', sans-serif;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .header h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+        
+        .header .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .header .time {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                rgba(255,255,255,0.3), 
+                rgba(255,255,255,0.6), 
+                rgba(255,255,255,0.3));
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 50px;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+        
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+        .timeline-item:nth-child(6) { animation-delay: 0.6s; }
+        
+        .timeline-content {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            margin: 0 auto;
+            max-width: 700px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+        
+        .timeline-icon {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+            z-index: 3;
+            border: 4px solid white;
+        }
+        
+        .step-title {
+            color: #764ba2;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .person {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            color: #2d3436;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(253,203,110,0.3);
+        }
+        
+        .details {
+            color: #2d3436;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .blessings {
+            background: linear-gradient(135deg, #ffeef8, #ffe5f1);
+            border-left: 4px solid #ff6b6b;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .blessings-title {
+            color: #ff6b6b;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        
+        .blessing-text {
+            color: #636e72;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 5px;
+        }
+        
+        .notes {
+            background: linear-gradient(135deg, #e3f2fd, #d1e7ff);
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            color: #2d3436;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(255,255,255,0.9);
+            color: #764ba2;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            background: white;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header .subtitle {
+                font-size: 1rem;
+            }
+            
+            .header .time {
+                font-size: 1.2rem;
+                padding: 8px 20px;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-icon {
+                left: 30px;
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+            
+            .timeline-content {
+                margin-left: 80px;
+                padding: 20px;
+            }
+            
+            .step-title {
+                font-size: 1.4rem;
+            }
+            
+            .details {
+                font-size: 1rem;
+            }
+            
+            .back-button {
+                top: 15px;
+                left: 15px;
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <a href="index.html" class="back-button">
+        ← 返回首頁
+    </a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>💍 文定儀式流程 💍</h1>
+            <p class="subtitle">蔡慕璇 ❤️ 林英嘉</p>
+            <div class="time">⏰ 11:30 開始</div>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-icon">💰</div>
+                <div class="timeline-content">
+                    <h3 class="step-title">
+                        <span class="step-number">1</span>
+                        納徵
+                    </h3>
+                    <div class="person">👰 媒婆</div>
+                    <div class="details">
+                        媒人將聘金交予女方家長
+                    </div>
+                    <div class="blessings">
+                        <div class="blessings-title">🎊 吉祥話</div>
+                        <div class="blessing-text">「今日好日子，兩姓結連理；門當擱戶對，榮華兼富貴。」</div>
+                        <div class="blessing-text">「兩府結成好姻緣，平安富貴萬萬年。」</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-icon">🍵</div>
+                <div class="timeline-content">
+                    <h3 class="step-title">
+                        <span class="step-number">2</span>
+                        奉甜茶
+                    </h3>
+                    <div class="person">🎤 主持人</div>
+                    <div class="details">
+                        帶領男方家長依序入座，新郎坐最後一個
+                    </div>
+                    <div class="person">👰 媒人</div>
+                    <div class="details">
+                        在旁向新娘說明該如何稱呼長輩<br>
+                        舉例：「這位是英嘉的叔叔」
+                    </div>
+                    <div class="person">👵 好命婆</div>
+                    <div class="details">
+                        牽著新娘出來奉茶（可以稍微幫忙拉裙子或幫忙拿茶盤）
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-icon">🧧</div>
+                <div class="timeline-content">
+                    <h3 class="step-title">
+                        <span class="step-number">3</span>
+                        壓茶甄
+                    </h3>
+                    <div class="person">👨‍👩‍👦 男方親友</div>
+                    <div class="details">
+                        放回茶杯時可以祝福新人，詞窮可以參考吉祥話
+                    </div>
+                    <div class="blessings">
+                        <div class="blessings-title">🎊 吉祥話參考</div>
+                        <div class="blessing-text">「茶杯深深 祝恁尪某會同心，茶杯圓圓 祝恁富貴萬萬年」</div>
+                        <div class="blessing-text">「茶杯深深，祝恁 尪某會同心。」</div>
+                        <div class="blessing-text">「茶杯圓圓，祝恁 富貴萬萬年」</div>
+                        <div class="blessing-text">「茶杯捧高高，厚哩得財源」</div>
+                    </div>
+                    <div class="person">👵 好命婆</div>
+                    <div class="details">
+                        和新娘一起出場回收茶杯
+                    </div>
+                    <div class="notes">
+                        💡 主持人注意整個流程，在新娘出場前可以說：下個環節是壓茶甄。可以提醒男方親友說祝福話。結束後請男方家長回座位。
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-icon">💍</div>
+                <div class="timeline-content">
+                    <h3 class="step-title">
+                        <span class="step-number">4</span>
+                        戴戒指
+                    </h3>
+                    <div class="person">🎤 主持人</div>
+                    <div class="details">
+                        請新娘坐高腳椅<br>
+                        請新郎新娘互相戴戒指（先新郎再新娘）
+                    </div>
+                    <div class="notes">
+                        💡 提醒戒指男左女右，戴中指，請攝影師協助拍照
+                    </div>
+                    <div class="person">👰 媒人</div>
+                    <div class="blessings">
+                        <div class="blessings-title">🎊 吉祥話</div>
+                        <div class="blessing-text">「一銅甲一金，兩人會同心，戒指掛乎正，尪某得人疼。」</div>
+                        <div class="blessing-text">「手指金金金，尪某會同心，尪某若同心，烏土變黃金。」</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-icon">✨</div>
+                <div class="timeline-content">
+                    <h3 class="step-title">
+                        <span class="step-number">5</span>
+                        交換金飾/鉤親
+                    </h3>
+                    <div class="person">🎤 主持人</div>
+                    <div class="details">
+                        請婆婆幫新娘戴項鍊、手鐲<br>
+                        請岳母幫新郎戴項鍊
+                    </div>
+                    <div class="notes">
+                        💡 戴的速度可以慢一點，方便攝影師拍攝
+                    </div>
+                    <div class="person">👰 媒人</div>
+                    <div class="blessings">
+                        <div class="blessings-title">🎊 吉祥話</div>
+                        <div class="blessing-text">「手鍊掛對對，新娘萬年大富貴。」</div>
+                        <div class="blessing-text">「項鍊手鍊雙雙對對，新娘子婿萬年富貴。」</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-icon">🎁</div>
+                <div class="timeline-content">
+                    <h3 class="step-title">
+                        <span class="step-number">6</span>
+                        回聘
+                    </h3>
+                    <div class="person">👨‍👩‍👧 女方家屬</div>
+                    <div class="details">
+                        將大聘、六色糖、香燭禮炮、12盒西式喜餅、以及6盒中式喜餅退給媒人，並贈送頭尾禮
+                    </div>
+                    <div class="person">🎤 主持人</div>
+                    <div class="details">
+                        說明現在的環節到哪
+                    </div>
+                    <div class="person">👰 媒人</div>
+                    <div class="details">
+                        將退禮和頭尾禮交給男方家屬
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-icon">🎉</div>
+                <div class="timeline-content">
+                    <h3 class="step-title">
+                        <span class="step-number">✓</span>
+                        文定結束
+                    </h3>
+                    <div class="person">🎤 主持人</div>
+                    <div class="details">
+                        可以請大家回座享用餐點 🥂
+                    </div>
+                    <div style="text-align: center; margin-top: 20px; font-size: 2rem;">
+                        💕 恭喜新人 💕
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 創建星星背景
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        createStars();
+    </script>
+</body>
+</html>
