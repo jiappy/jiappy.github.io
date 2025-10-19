@@ -475,6 +475,35 @@
                 padding: 15px;
             }
         }
+        .nav-button {
+            display: inline-block;
+            margin-top: 60px; /* 與上方 click-hint 保距 */
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* 手機版微調 */
+        @media (max-width: 768px) {
+            .click-hint {
+                position: static; /* 不要固定底部，讓它自然排列 */
+                margin-top: 30px;
+            }
+
+            .nav-button {
+                margin-top: 15px;
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+        }
     </style>
 </head>
 <body>
